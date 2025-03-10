@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Array_of_HistoryLog",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/HistoryLog"
+  },
+  "definitions": {
+    "HistoryLog": {
+      "type": "object",
+      "required": [
+        "bet_is_head",
+        "did_win",
+        "flip_id",
+        "timestamp_seconds",
+        "user_address",
+        "wager"
+      ],
+      "properties": {
+        "bet_is_head": {
+          "type": "boolean"
+        },
+        "did_win": {
+          "type": "boolean"
+        },
+        "flip_id": {
+          "type": "string"
+        },
+        "timestamp_seconds": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "user_address": {
+          "type": "string"
+        },
+        "wager": {
+          "type": "integer",
+          "format": "uint128",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

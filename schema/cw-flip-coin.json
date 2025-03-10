@@ -16,7 +16,7 @@
       },
       "minimum_bet": {
         "type": "integer",
-        "format": "uint32",
+        "format": "uint128",
         "minimum": 0.0
       }
     },
@@ -61,7 +61,7 @@
             "properties": {
               "amount": {
                 "type": "integer",
-                "format": "uint32",
+                "format": "uint128",
                 "minimum": 0.0
               }
             },
@@ -84,6 +84,63 @@
             "properties": {
               "denom": {
                 "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "flip"
+        ],
+        "properties": {
+          "flip": {
+            "type": "object",
+            "required": [
+              "is_head"
+            ],
+            "properties": {
+              "is_head": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "add_funds"
+        ],
+        "properties": {
+          "add_funds": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "remove_funds"
+        ],
+        "properties": {
+          "remove_funds": {
+            "type": "object",
+            "required": [
+              "amount"
+            ],
+            "properties": {
+              "amount": {
+                "type": "integer",
+                "format": "uint128",
+                "minimum": 0.0
               }
             },
             "additionalProperties": false
@@ -135,6 +192,50 @@
           }
         },
         "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "funds"
+        ],
+        "properties": {
+          "funds": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "history_logs"
+        ],
+        "properties": {
+          "history_logs": {
+            "type": "object",
+            "properties": {
+              "limit": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "format": "uint64",
+                "minimum": 0.0
+              },
+              "offset": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "format": "uint64",
+                "minimum": 0.0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
       }
     ]
   },
@@ -146,11 +247,64 @@
       "title": "String",
       "type": "string"
     },
+    "funds": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "uint128",
+      "type": "integer",
+      "format": "uint128",
+      "minimum": 0.0
+    },
+    "history_logs": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Array_of_HistoryLog",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/HistoryLog"
+      },
+      "definitions": {
+        "HistoryLog": {
+          "type": "object",
+          "required": [
+            "bet_is_head",
+            "did_win",
+            "flip_id",
+            "timestamp_seconds",
+            "user_address",
+            "wager"
+          ],
+          "properties": {
+            "bet_is_head": {
+              "type": "boolean"
+            },
+            "did_win": {
+              "type": "boolean"
+            },
+            "flip_id": {
+              "type": "string"
+            },
+            "timestamp_seconds": {
+              "type": "integer",
+              "format": "uint64",
+              "minimum": 0.0
+            },
+            "user_address": {
+              "type": "string"
+            },
+            "wager": {
+              "type": "integer",
+              "format": "uint128",
+              "minimum": 0.0
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
     "minimum_bet": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "uint32",
+      "title": "uint128",
       "type": "integer",
-      "format": "uint32",
+      "format": "uint128",
       "minimum": 0.0
     },
     "pause": {

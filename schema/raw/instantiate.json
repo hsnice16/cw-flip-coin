@@ -12,7 +12,7 @@
     },
     "minimum_bet": {
       "type": "integer",
-      "format": "uint32",
+      "format": "uint128",
       "minimum": 0.0
     }
   },
