@@ -1,5 +1,4 @@
 use cosmwasm_std::{coins, to_json_binary, BankMsg, DepsMut, Env, Event, MessageInfo, Response};
-use uuid::Uuid;
 
 use crate::{
     error::ContractError,
@@ -70,7 +69,6 @@ pub fn flip(
     info: MessageInfo,
     is_head: bool,
 ) -> Result<Response, ContractError> {
-    let flip_id = Uuid::new_v4().to_string();
     let minimum_bet = MINIMUM_BET.load(deps.storage)?;
 
     let denom = DENOM.load(deps.storage)?;
@@ -81,8 +79,9 @@ pub fn flip(
     }
 
     let mut did_win = false;
+    let timestamp_nanos = env.block.time.nanos();
 
-    if flip_coin() == is_head {
+    if flip_coin(env.block.height, info.sender.clone(), timestamp_nanos) == is_head {
         did_win = true;
     }
 
@@ -95,6 +94,9 @@ pub fn flip(
             amount: coins(wager * 2, denom),
         });
     }
+
+    let history_logs = HISTORY_LOGS.load(deps.storage)?;
+    let flip_id = format!("{}-{}", timestamp_nanos, history_logs.len());
 
     let event = Event::new("flip_completed")
         .add_attribute("flip_id", flip_id.clone())

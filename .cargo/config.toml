@@ -1,5 +1,4 @@
 [alias]
 schema = "run schema"
 optimize = "run-script optimize"
-unit-tests = "test --lib unit_tests -- --nocapture"
 integration-tests = "test --lib integration_tests -- --nocapture"
